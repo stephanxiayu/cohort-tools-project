@@ -17,11 +17,11 @@ The API offers a variety of routes to work with *cohort* and *student* documents
 
 | HTTP verb | URL                        | Request body | Action                                 |
 | --------- | -------------------------- | ------------ | -------------------------------------- |
-| GET       | `/api/cohorts`             | (empty)      | Returns all the cohorts in JSON format |
-| GET       | `/api/cohorts/:cohortId`   | (empty)      | Returns the specified cohort by id     |
-| POST      | `/api/cohorts`             | JSON         | Creates a new cohort                   |
-| PUT       | `/api/cohorts/:cohortId`   | JSON         | Updates the specified cohort by id     |
-| DELETE    | `/api/cohorts/:cohortId`   | (empty)      | Deletes the specified cohort by id     |
+| GET       | ✅ `/api/cohorts`             | (empty)      | Returns all the cohorts in JSON format |
+| GET       | ✅ `/api/cohorts/:cohortId`   | (empty)      | Returns the specified cohort by id     |
+| POST      | ✅ `/api/cohorts`             | JSON         | Creates a new cohort                   |
+| PUT       | ✅ `/api/cohorts/:cohortId`   | JSON         | Updates the specified cohort by id     |
+| DELETE    | ✅ `/api/cohorts/:cohortId`   | (empty)      | Deletes the specified cohort by id     |
 
 
 <br>
@@ -30,12 +30,12 @@ The API offers a variety of routes to work with *cohort* and *student* documents
 
 | HTTP verb | URL                               | Request body | Action                                                         |
 | --------- | --------------------------------- | ------------ | -------------------------------------------------------------- |
-| GET       | `/api/students`                   | (empty)      | Returns all the students in JSON format                        |
-| GET       | `/api/students/cohort/:cohortId`  | (empty)      | Returns all the students of a specified cohort in JSON format  |
-| GET       | `/api/students/:studentId`        | (empty)      | Returns the specified student by id                            |
-| POST      | `/api/students`                   | JSON         | Creates a new student **with their respective cohort id**      |
-| PUT       | `/api/students/:studentId`        | JSON         | Updates the specified student by id                            |
-| DELETE    | `/api/students/:studentId`        | (empty)      | Deletes the specified cohort by id                             |
+| GET       | ✅ `/api/students`                   | (empty)      | Returns all the students in JSON format                        |
+| GET       | ✅ `/api/students/cohort/:cohortId`  | (empty)      | Returns all the students of a specified cohort in JSON format  |
+| GET       | ✅ `/api/students/:studentId`        | (empty)      | Returns the specified student by id                            |
+| POST      | ✅ `/api/students`                   | JSON         | Creates a new student **with their respective cohort id**      |
+| PUT       | ✅ `/api/students/:studentId`        | JSON         | Updates the specified student by id                            |
+| DELETE    | ✅ `/api/students/:studentId`        | (empty)      | Deletes the specified cohort by id                             |
 
 
 <hr>
