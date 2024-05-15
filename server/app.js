@@ -123,7 +123,8 @@ app.delete("/api/cohorts/:cohortId", (req, res) => {
 
 // ✅ GET /api/students
 app.get("/api/students", (req, res) => {
-  Student.find({})
+  Student.find()
+  .populate('cohort')
   .then((allStudents) => {
     console.log('🟢 Yaaayy all the students are here'),
     res.status(200).json(allStudents)
@@ -138,7 +139,8 @@ app.get("/api/students", (req, res) => {
 app.get("/api/students/cohort/:cohortId", (req, res) => {
   const cohortId = req.params.cohortId
 
-  Student.find({cohort: cohortId}) // I'm so proud of that
+  Student.find({cohort: cohortId})
+  .populate('cohort')
   .then((allStudents) => {
     console.log('🟢 All the students in the cohort ' + cohortId + ' are here'),
     res.status(200).json(allStudents)
@@ -153,6 +155,7 @@ app.get("/api/students/cohort/:cohortId", (req, res) => {
 app.get("/api/students/:studentId", (req, res) => {
   const studentId = req.params.studentId
   Student.find({})
+  .populate('cohort')
   .then((student) => {
     console.log('🟢 Say hi to student ' + studentId),
     res.status(200).json(student)
