@@ -44,173 +44,19 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+const allRoutes = require("./routes");
+app.use("/", allRoutes);
 
-////////////// COHORTS
+const cohortsRouter = require("./routes/cohorts.routes");
+app.use("/api", cohortsRouter);
 
-// GET /api/cohorts
-app.get("/api/cohorts", (req, res) => {
-  Cohort.find({})
-  .then((allCohorts) => {
-    console.log('🟢 Yaaayy all the cohorts are here'),
-    res.status(200).json(allCohorts)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to display cohorts', error);
-    res.status(500).json({error: '🔴 Failed to display cohorts'})
-  })
-});
-
-// ✅ GET /api/cohorts/:cohortId
-app.get("/api/cohorts/:cohortId", (req, res) => {
-  const cohortId = req.params.cohortId
-
-  Cohort.find({})
-    .then((cohort) => {
-      console.log('🟢 Found cohort ' + cohortId),
-      res.status(200).json(cohort)
-    })
-    .catch((error) => {
-      console.error('🔴 Failed to retrieve this cohort', error);
-      res.status(500).json({error: '🔴 Failed to retrieve this cohort'})
-    })
-});
-
-// ✅ POST /api/cohorts
-app.post("/api/cohorts", (req, res) => {
-  Cohort.create(req.body)
-  .then((createdCohort) => {
-    console.log('🟢 Cohort successfully created'),
-    res.status(201).json(createdCohort)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to create cohort', error);
-    res.status(500).json({error: '🔴 Failed to create cohort'})
-  })
-});
-
-// ✅ PUT /api/cohorts/:cohortId
-app.put("/api/cohorts/:cohortId", (req, res) => {
-  const cohortId = req.params.cohortId
-  Cohort.findByIdAndUpdate(cohortId, req.body, {new: false})
-  .then((updatedCohort) => {
-    console.log('🟢 Cohort successfully updated'),
-    res.status(204).json(updatedCohort)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to update this cohort"', error);
-    res.status(500).json({error: '🔴 Failed to update this cohort'})
-  })
-});
-
-// ✅ DELETE /api/cohorts/:cohortId
-app.delete("/api/cohorts/:cohortId", (req, res) => {
-  const cohortId = req.params.cohortId
-  Cohort.findByIdAndDelete(cohortId)
-  .then(() => {
-    console.log('🟢 Cohort successfully deleted'),
-    res.status(204).send()
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to delete this cohort', error);
-    res.status(500).json({error: '🔴 Failed to delete this cohort'})
-  })
-});
+const studentsRouter = require("./routes/students.routes");
+app.use("/api", studentsRouter);
 
 
-
-
-////////////// STUDENTS
-
-// ✅ GET /api/students
-app.get("/api/students", (req, res) => {
-  Student.find()
-  .populate('cohort')
-  .then((allStudents) => {
-    console.log('🟢 Yaaayy all the students are here'),
-    res.status(200).json(allStudents)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to display students', error);
-    res.status(500).json({error: '🔴 Failed to display students'})
-  })
-});
-
-// ✅ GET /api/students/cohort/:cohortId
-app.get("/api/students/cohort/:cohortId", (req, res) => {
-  const cohortId = req.params.cohortId
-
-  Student.find({cohort: cohortId})
-  .populate('cohort')
-  .then((allStudents) => {
-    console.log('🟢 All the students in the cohort ' + cohortId + ' are here'),
-    res.status(200).json(allStudents)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to retrieve students from this cohort', error);
-    res.status(500).json({error: '🔴 Failed to retrieve students from this cohort'})
-  })
-});
-
-// ✅ GET /api/students/:studentId
-app.get("/api/students/:studentId", (req, res) => {
-  const studentId = req.params.studentId
-  Student.find({})
-  .populate('cohort')
-  .then((student) => {
-    console.log('🟢 Say hi to student ' + studentId),
-    res.status(200).json(student)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to retrieve this student"', error);
-    res.status(500).json({error: '🔴 Failed to retrieve this student'})
-  })
-});
-
-// ✅ POST /api/students
-app.post("/api/students", (req, res) => {
-  Student.create(req.body)
-  .then((createdStudent) => {
-    console.log('🟢 Student successfully created'),
-    res.status(201).json(createdStudent)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to create student', error);
-    res.status(500).json({error: '🔴 Failed to create student'})
-  })
-});
-
-// ✅ PUT /api/students/:studentId
-app.put("/api/students/:studentId", (req, res) => {
-  const studentId = req.params.studentId
-  Student.findByIdAndUpdate(studentId, req.body, {new: false})
-  .then((updatedStudent) => {
-    console.log('🟢 Student successfully updated'),
-    res.status(204).json(updatedStudent)
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to update this student"', error);
-    res.status(500).json({error: '🔴 Failed to update this student'})
-  })
-});
-
-// ✅ DELETE /api/students/:studentId
-app.delete("/api/students/:studentId", (req, res) => {
-  const studentId = req.params.studentId
-  Student.findByIdAndDelete(studentId)
-  .then(() => {
-    console.log('🟢 Student successfully deleted'),
-    res.status(204).send()
-  })
-  .catch((error) => {
-    console.error('🔴 Failed to delete this student', error);
-    res.status(500).json({error: '🔴 Failed to delete this student'})
-  })
-});
-
-
-const { errorHandler, notFoundHandler } = require("./middleware/error-handling");
-app.use(errorHandler);
-app.use(notFoundHandler);
+// const { errorHandler, notFoundHandler } = require("./middleware/errorHandling");
+// app.use(errorHandler);
+// app.use(notFoundHandler);
 
 
 // START SERVER
