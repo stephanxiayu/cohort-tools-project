@@ -54,9 +54,9 @@ const studentsRouter = require("./routes/students.routes");
 app.use("/api", studentsRouter);
 
 
-// const { errorHandler, notFoundHandler } = require("./middleware/errorHandling");
-// app.use(errorHandler);
-// app.use(notFoundHandler);
+const { errorHandler, notFoundHandler } = require("./middleware/errorHandling");
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 
 // START SERVER
