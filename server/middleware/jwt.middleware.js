@@ -18,12 +18,15 @@ const isAuthenticated = (req, res, next) => {
     // Call next() to pass the request to the next middleware function or route
     next();
   } catch (error) {
-    // We catch the error here and return a 401 status code and an error message
-    // The middleware throws an error if unable to validate the token. It throws an error if:
-    // 1. There is no token
-    // 2. Token is invalid
-    // 3. There is no headers or authorization in req (no token)
-    res.status(401).json("❌ Token not provided or not valid");
+    let errorMessage = "❌ Token not provided or not valid";
+    if (error.message === "Token not provided") {
+      errorMessage = "❌ Token not provided";
+    } else if (error.name === "JsonWebTokenError") {
+      errorMessage = "❌ Token not valid";
+    } else if (error.name === "TokenExpiredError") {
+      errorMessage = "❌ Token expired";
+    }
+    res.status(401).json({ message: errorMessage });
   }
 };
 
