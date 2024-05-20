@@ -31,7 +31,7 @@ function LoginPage() {
         navigate("/");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+        const errorDescription = error.message;
         setErrorMessage(errorDescription);
       });
   };

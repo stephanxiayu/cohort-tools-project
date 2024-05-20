@@ -11,6 +11,9 @@ const cohortsData = "/data/cohorts.json"
 const studentsData = "/data/students.json"
 
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");
+
+
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
 const app = express();
 
@@ -47,12 +50,14 @@ app.get("/docs", (req, res) => {
 const allRoutes = require("./routes");
 app.use("/", allRoutes);
 
+const authRouter = require("./routes/auth.routes");
+app.use("/auth", authRouter);
+
 const cohortsRouter = require("./routes/cohorts.routes");
-app.use("/api", cohortsRouter);
+app.use("/api", isAuthenticated, cohortsRouter);
 
 const studentsRouter = require("./routes/students.routes");
-app.use("/api", studentsRouter);
-
+app.use("/api", isAuthenticated, studentsRouter);
 
 const { errorHandler, notFoundHandler } = require("./middleware/errorHandling");
 app.use(errorHandler);
